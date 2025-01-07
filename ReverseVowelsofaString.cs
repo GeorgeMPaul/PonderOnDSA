@@ -1,21 +1,34 @@
 public class Solution {
     public string ReverseVowels(string s) {
-        List<char> vowels = new List<char>();
-        char[] cv = s.ToCharArray();
 
-        foreach(char c in s){
-            if ("aeiouAEIOU".Contains(c))
-                vowels.Add(c);
-        }
-        vowels.Reverse();
+        if (string.IsNullOrEmpty(s))
+            return s;
 
-        var j=0;
-        for (int i=0;i<s.Length;i++){
-            if ("aeiouAEIOU".Contains(s[i])){
-                cv[i] = vowels[j];
-                j++;
+        char[] charArray = s.ToCharArray();
+        int left = 0;
+        int right = s.Length - 1;
+        string vowels = "aeiouAEIOU";
+
+        while (left < right)
+        {
+            while (left < right && !vowels.Contains(charArray[left]))
+            {
+                left++;
             }
+
+            while (left < right && !vowels.Contains(charArray[right]))
+            {
+                right--;
+            }
+
+            char temp = charArray[left];
+            charArray[left] = charArray[right];
+            charArray[right] = temp;
+
+            left++;
+            right--;
         }
-        return new string(cv);
+
+        return new string(charArray);
     }
 }
